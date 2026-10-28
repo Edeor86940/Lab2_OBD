@@ -22,6 +22,9 @@ ALTER TABLE `Session` ADD FOREIGN KEY (`student_id`) REFERENCES `Students` (`stu
 
 ALTER TABLE `Session` ADD FOREIGN KEY (`coach_id`) REFERENCES `Coachs` (`coach_id`);
 
+CREATE INDEX `idx_session_student` ON `Session` (`student_id`);
+CREATE INDEX `idx_session_coach` ON `Session` (`coach_id`);
+
 -- Disable foreign key checks for INSERT
 SET FOREIGN_KEY_CHECKS = 0;
 
