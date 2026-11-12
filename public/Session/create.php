@@ -2,12 +2,9 @@
 require_once __DIR__ . '/../../src/db.php';
 require_once __DIR__ . '/../../src/helpers.php';
 
-
-// Отримуємо список тренерів (змінено Coaches на Coachs)
 $coachesStmt = db()->query("SELECT coach_id, full_name FROM Coachs");
 $coaches = $coachesStmt->fetchAll();
 
-// Отримуємо список студентів для зв'язку (Foreign Key)
 $studentsStmt = db()->query("SELECT student_id, full_name FROM students");
 $students = $studentsStmt->fetchAll();
 
@@ -27,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        // Змінено Sessions на Session та додано student_id замість title
         $stmt = db()->prepare('INSERT INTO Session (student_id, coach_id, date_of_session) VALUES (:student_id, :coach_id, :s_date)');
         $stmt->execute([
             ':student_id' => (int)$data['student_id'],
@@ -45,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <h1>Створити тренування / сесію</h1>
     <form method="post" novalidate>
-        <!-- ВИПАДАЮЧИЙ СПИСОК СТУДЕНТІВ (FK) -->
         <label>Студент:</label><br>
         <select name="student_id" required>
             <option value="">— оберіть студента —</option>
@@ -58,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </select>
         <?php if (isset($errors['student_id'])): ?><div style="color:red;"><?= $errors['student_id'] ?></div><?php endif; ?><br><br>
 
-        <!-- ВИПАДАЮЧИЙ СПИСОК ТРЕНЕРІВ (FK) -->
         <label>Тренер:</label><br>
         <select name="coach_id" required>
             <option value="">— оберіть тренера —</option>

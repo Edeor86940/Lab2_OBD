@@ -5,7 +5,6 @@ require_once __DIR__ . '/../../src/helpers.php';
 
 $id = (int)($_GET['id'] ?? 0);
 
-// Завантажуємо поточну сесію (змінено Sessions на Session)
 $stmt = db()->prepare('SELECT * FROM Session WHERE session_id = ?');
 $stmt->execute([$id]);
 $session = $stmt->fetch();
@@ -15,11 +14,9 @@ if (!$session) {
     exit('Тренування не знайдено.');
 }
 
-// Отримуємо список тренерів (змінено Coaches на Coachs)
 $coachesStmt = db()->query("SELECT coach_id, full_name FROM Coachs");
 $coaches = $coachesStmt->fetchAll();
 
-// Отримуємо список студентів (для зв'язку із сесією)
 $studentsStmt = db()->query("SELECT student_id, full_name FROM students");
 $students = $studentsStmt->fetchAll();
 
@@ -43,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        // Оновлюємо таблицю Session та поля відповідно до бази даних
         $stmt = db()->prepare(
             'UPDATE Session SET student_id = :student_id, coach_id = :coach_id, date_of_session = :s_date 
              WHERE session_id = :id'
@@ -92,7 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </select>
         <?php if (isset($errors['coach_id'])): ?><div style="color:red;"><?= $errors['coach_id'] ?></div><?php endif; ?><br><br>
 
-        <!-- Дата сесії -->
         <label>Дата і час:</label><br>
         <input type="date" name="date_of_session" value="<?= htmlspecialchars($data['date_of_session']) ?>"><br><br>
 

@@ -5,7 +5,6 @@ require_once __DIR__ . '/../../src/helpers.php';
 
 $id = (int)($_GET['id'] ?? 0);
 
-// Завантажуємо поточного тренера з бази (виправлено назву таблиці на Coachs)
 $stmt = db()->prepare('SELECT * FROM Coachs WHERE coach_id = ?');
 $stmt->execute([$id]);
 $coach = $stmt->fetch();
@@ -17,7 +16,7 @@ if (!$coach) {
 
 $data = [
     'full_name'      => $coach['full_name'],
-    'adrres'         => $coach['adrres'] ?? '', // Замінено phone на adrres відповідно до схеми
+    'adrres'         => $coach['adrres'] ?? '', 
     'specialization' => $coach['specialization'] ?? ''
 ];
 $errors = [];
@@ -32,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        // Виправлено назву таблиці на Coachs та поле phone на adrres
         $stmt = db()->prepare(
             'UPDATE Coachs SET full_name = :full_name, adrres = :adrres, specialization = :spec 
              WHERE coach_id = :id'

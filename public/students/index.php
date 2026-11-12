@@ -1,5 +1,5 @@
 <?php
-// Обов'язкове підключення баз даних та помічників на самісінькому верху файлу!
+
 require_once __DIR__ . '/../../src/db.php';
 require_once __DIR__ . '/../../src/helpers.php';
 
@@ -10,16 +10,16 @@ $q    = trim((string)($_GET['q'] ?? ''));
  
 $stmt = db()->prepare('SELECT COUNT(*) FROM students WHERE full_name LIKE :q');
 $stmt->execute([':q' => "%$q%"]);
-$total = (int)$stmt->fetchColumn();                         // всього записів
+$total = (int)$stmt->fetchColumn();                         
 $pages = max(1, (int)ceil($total / $perPage));
 $page  = min($page, $pages);
  
 $stmt = db()->prepare('SELECT * FROM students WHERE full_name LIKE :q LIMIT :limit OFFSET :offset');
 $stmt->bindValue(':q', "%$q%");
 $stmt->bindValue(':limit', $perPage, PDO::PARAM_INT);
-$stmt->bindValue(':offset', ($page - 1) * $perPage, PDO::PARAM_INT); // Виправлено формулу
+$stmt->bindValue(':offset', ($page - 1) * $perPage, PDO::PARAM_INT); 
 $stmt->execute();
-$students = $stmt->fetchAll();                              // масив студентів для виводу
+$students = $stmt->fetchAll();                              
 $messages = take_flash();
 ?>
 <!DOCTYPE html>
@@ -39,7 +39,7 @@ $messages = take_flash();
 
     <p><a href="create.php">Додати нового студента</a></p>
 
-    <!-- Форма пошуку -->
+   
     <form method="GET" action="">
         <input type="text" name="q" value="<?= htmlspecialchars($q) ?>" placeholder="Пошук за ім'ям...">
         <button type="submit">Шукати</button>
@@ -73,7 +73,7 @@ $messages = take_flash();
         <?php endif; ?>
     </table>
 
-    <!-- Пагінація -->
+   
     <div style="margin-top: 15px;">
         <?php if ($page > 1): ?>
             <a href="?page=<?= $page - 1 ?>&q=<?= urlencode($q) ?>">&laquo; Попередня</a>

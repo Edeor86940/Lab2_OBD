@@ -7,16 +7,11 @@ $data = ['full_name' => '', 'date_of_birth' => ''];
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Читаємо дані з форми
     $data['full_name']     = trim($_POST['full_name'] ?? '');
     $data['date_of_birth'] = trim($_POST['date_of_birth'] ?? '');
-
-    // Валідація
     if ($data['full_name'] === '' || mb_strlen($data['full_name']) > 150) {
         $errors['full_name'] = 'Вкажіть ПІБ (до 150 символів).';
     }
-
-    // Якщо немає помилок — робимо INSERT із маленькою літерою в назві таблиці
     if (empty($errors)) {
         try {
             $stmt = db()->prepare(
@@ -27,12 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':full_name'     => $data['full_name'],
                 ':date_of_birth' => $data['date_of_birth'] !== '' ? $data['date_of_birth'] : null,
             ]);
-            
-            // Перенаправлення на головну сторінку списку після успіху
             redirect('index.php');
             
         } catch (PDOException $e) {
-            // Обробка дублікатів чи інших помилок БД за потреби
             throw $e; 
         }
     }

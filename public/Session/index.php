@@ -6,15 +6,13 @@ require_once __DIR__ . '/../../src/helpers.php';
 $perPage = 10;
 $page = max(1, (int)($_GET['page'] ?? 1));
 $q    = trim((string)($_GET['q'] ?? ''));
- 
-// Підрахунок загальної кількості (пошук за датою сесії або ID тренера/студента)
+
 $stmt = db()->prepare('SELECT COUNT(*) FROM Session WHERE date_of_session LIKE :q');
 $stmt->execute([':q' => "%$q%"]);
 $total = (int)$stmt->fetchColumn();
 $pages = max(1, (int)ceil($total / $perPage));
 $page  = min($page, $pages);
- 
-// Вибірка сесій разом із ім'ям тренера та студента (якщо потрібно)
+
 $stmt = db()->prepare(
     'SELECT s.session_id, s.date_of_session, c.full_name AS coach_name, st.full_name AS student_name 
      FROM Session s 

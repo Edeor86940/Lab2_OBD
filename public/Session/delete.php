@@ -13,13 +13,6 @@ $pdo = db();
 
 try {
     $pdo->beginTransaction();
-
-    // Якщо у вас є пов'язана таблиця записів студентів на тренування, 
-    // спочатку видаляємо зв'язки звідти, якщо це необхідно:
-    // $stmt = $pdo->prepare('DELETE FROM session_students WHERE session_id = ?');
-    // $stmt->execute([$id]);
-
-    // Видаляємо саму сесію (змінено Sessions на Session відповідно до бази даних)
     $stmt = $pdo->prepare('DELETE FROM Session WHERE session_id = ?');
     $stmt->execute([$id]);
 
