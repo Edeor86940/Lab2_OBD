@@ -1,14 +1,15 @@
 <?php
+declare(strict_types=1);
+
 require_once __DIR__ . '/../../src/db.php';
 require_once __DIR__ . '/../../src/helpers.php';
-
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     exit('Method Not Allowed');
 }
 
-
+verify_csrf_or_419();
 
 $id = (int)($_POST['id'] ?? 0);
 $pdo = db();
@@ -16,21 +17,20 @@ $pdo = db();
 try {
     $pdo->beginTransaction();
 
-
     $stmt = $pdo->prepare('DELETE FROM Session WHERE student_id = ?');
     $stmt->execute([$id]);
-
 
     $stmt = $pdo->prepare('DELETE FROM students WHERE student_id = ?');
     $stmt->execute([$id]);
 
     $pdo->commit();
-    
+
     flash('success', 'Студента успішно видалено.');
 } catch (Throwable $e) {
     if ($pdo->inTransaction()) {
         $pdo->rollBack();
     }
+    error_log('Delete student error: ' . $e->getMessage());
     flash('error', 'Не вдалося видалити студента.');
 }
 

@@ -24,7 +24,6 @@ ALTER TABLE `Session` ADD FOREIGN KEY (`coach_id`) REFERENCES `Coachs` (`coach_i
 CREATE INDEX `idx_session_student` ON `Session` (`student_id`);
 CREATE INDEX `idx_session_coach` ON `Session` (`coach_id`);
 
-
 START TRANSACTION;
 UPDATE Coachs 
 SET specialization = 'Реабілітація та ЛФК' 
@@ -32,8 +31,7 @@ WHERE coach_id = 1;
 UPDATE Coachs 
 SET adrres = 'вул. Спортивна, 10' 
 WHERE coach_id = 1;
-COMMIT
-
+COMMIT;
 
 -- Disable foreign key checks for INSERT
 SET FOREIGN_KEY_CHECKS = 0;

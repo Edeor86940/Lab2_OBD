@@ -33,7 +33,7 @@ $messages = take_flash();
 
     <?php foreach ($messages as $msg): ?>
         <div style="color: <?= $msg['type'] === 'success' ? 'green' : 'red' ?>; margin-bottom: 10px;">
-            <?= htmlspecialchars($msg['text']) ?>
+            <?= h($msg['text']) ?>
         </div>
     <?php endforeach; ?>
 
@@ -41,7 +41,7 @@ $messages = take_flash();
 
    
     <form method="GET" action="">
-        <input type="text" name="q" value="<?= htmlspecialchars($q) ?>" placeholder="Пошук за ім'ям...">
+        <input type="text" name="q" value="<?= h($q) ?>" placeholder="Пошук за ім'ям...">
         <button type="submit">Шукати</button>
     </form>
     <br>
@@ -59,8 +59,8 @@ $messages = take_flash();
             <?php foreach ($students as $student): ?>
             <tr>
                 <td><?= $student['student_id'] ?></td>
-                <td><?= htmlspecialchars($student['full_name']) ?></td>
-                <td><?= htmlspecialchars($student['date_of_birth'] ?? '') ?></td>
+                <td><?= h($student['full_name']) ?></td>
+                <td><?= h($student['date_of_birth'] ?? '') ?></td>
                 <td>
                     <a href="edit.php?id=<?= $student['student_id'] ?>">Редагувати</a> | 
                     <form action="delete.php" method="POST" onsubmit="return confirm('Видалити студента?');" style="display:inline;">

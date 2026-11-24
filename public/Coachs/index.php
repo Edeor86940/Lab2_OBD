@@ -32,14 +32,14 @@ $messages = take_flash();
 
     <?php foreach ($messages as $msg): ?>
         <div style="color: <?= $msg['type'] === 'success' ? 'green' : 'red' ?>; margin-bottom: 10px;">
-            <?= htmlspecialchars($msg['text']) ?>
+            <?= h($msg['text']) ?>
         </div>
     <?php endforeach; ?>
 
     <p><a href="create.php">Додати нового тренера</a></p>
 
     <form method="GET" action="">
-        <input type="text" name="q" value="<?= htmlspecialchars($q) ?>" placeholder="Пошук тренера...">
+        <input type="text" name="q" value="<?= h($q) ?>" placeholder="Пошук тренера...">
         <button type="submit">Шукати</button>
     </form>
     <br>
@@ -57,8 +57,8 @@ $messages = take_flash();
             <?php foreach ($coaches as $coach): ?>
             <tr>
                 <td><?= $coach['coach_id'] ?></td>
-                <td><?= htmlspecialchars($coach['full_name']) ?></td>
-                <td><?= htmlspecialchars($coach['specialization'] ?? '') ?></td>
+                <td><?= h($coach['full_name']) ?></td>
+                <td><?= h($coach['specialization'] ?? '') ?></td>
                 <td>
                     <a href="edit.php?id=<?= $coach['coach_id'] ?>">Редагувати</a> | 
                     <form action="delete.php" method="POST" onsubmit="return confirm('Видалити цього тренера?');" style="display:inline;">
