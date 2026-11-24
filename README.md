@@ -7,10 +7,11 @@
     docker compose up -d --build
     # відкрити http://localhost:8080/
 ## Структура БД
-
+https://github.com/Edeor86940/Lab2_OBD/blob/main/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-11-12%20201322.png
 ## Реалізовано
 - [x] CRUD: students, courses, teachers
 - [x] Підготовлені запити PDO, htmlspecialchars, CSRF
  
 ## Скриншоти
-
+https://github.com/Edeor86940/Lab2_OBD/blob/main/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-11-12%20183837.png
+https://github.com/Edeor86940/Lab2_OBD/blob/main/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-11-24%20163340.png
