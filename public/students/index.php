@@ -64,9 +64,10 @@ $messages = take_flash();
                 <td>
                     <a href="edit.php?id=<?= $student['student_id'] ?>">Редагувати</a> | 
                     <form action="delete.php" method="POST" onsubmit="return confirm('Видалити студента?');" style="display:inline;">
-                        <input type="hidden" name="id" value="<?= $student['student_id'] ?>">
-                        <button type="submit" style="color: red; background: none; border: none; cursor: pointer; padding: 0;">Видалити</button>
-                    </form>
+    <?= csrf_field() ?>
+    <input type="hidden" name="id" value="<?= $student['student_id'] ?>">
+    <button type="submit" style="color: red; background: none; border: none; cursor: pointer; padding: 0;">Видалити</button>
+    </form>
                 </td>
             </tr>
             <?php endforeach; ?>
